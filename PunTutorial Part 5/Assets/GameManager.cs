@@ -8,13 +8,13 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public GameObject playerPrefab;
     public GameObject pauseCanvas;
-    public bool paused;
+    public bool paused = false;
 
     // Start is called before the first frame update
     void Start()
     {
         PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 5, 0), Quaternion.identity);
-        SetPausedState();
+        SetPaused();
     }
 
     public void Quit()
@@ -33,14 +33,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             paused = !paused;
-            SetPausedState();
+            SetPaused();
         }
     }
 
-    void SetPausedState()
+    void SetPaused()
     {
+        //set the canvas
         pauseCanvas.SetActive(paused);
+        //set the cursoro lock
         Cursor.lockState = paused ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = !paused;
+        //set the cursoro visible
+        Cursor.visible = paused;
     }
+
 }
