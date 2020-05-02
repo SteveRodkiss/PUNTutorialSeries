@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
@@ -39,19 +40,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("joined a room- yay!");
+ 
+
+
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.LoadLevel(1);
         }
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    
+ 
 
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
@@ -10,20 +12,21 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     /// Move the player charactercontroller based on horizontal and vertical axis input
     /// </summary>
 
+
     float yVelocity = 0f;
-    [Range(-5f,-25f)]
+    [Range(-5f, -25f)]
     public float gravity = -15f;
     //the speed of the player movement
-    [Range(5f,15f)]
+    [Range(5f, 15f)]
     public float movementSpeed = 10f;
     //jump speed
-    [Range(5f,15f)]
+    [Range(5f, 15f)]
     public float jumpSpeed = 10f;
 
     //now the camera so we can move it up and down
     public Transform cameraTransform;
     float pitch = 0f;
-    [Range(1f,90f)]
+    [Range(1f, 90f)]
     public float maxPitch = 85f;
     [Range(-1f, -90f)]
     public float minPitch = -85f;
@@ -41,6 +44,14 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
             GetComponentInChildren<Camera>().enabled = false;
             GetComponentInChildren<AudioListener>().enabled = false;
         }
+        else
+        {
+            if (PhotonTeamsManager.Instance.TryGetTeamMembers(1, out Player[] blueTeam) && PhotonTeamsManager.Instance.TryGetTeamMembers(2, out Player[] redTeam))
+            {
+                //we have redteam and blue team
+                PhotonTeamExtensions.JoinTeam(PhotonNetwork.LocalPlayer, (blueTeam.Length < redTeam.Length) ? (byte)1 : (byte)2);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -51,7 +62,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
             Look();
             Move();
         }
- 
+
     }
 
     void Look()

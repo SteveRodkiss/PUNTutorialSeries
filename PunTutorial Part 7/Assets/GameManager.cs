@@ -2,20 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+using Photon.Pun.UtilityScripts;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
 
-    public GameObject playerPrefab;
+    public GameObject redPlayerPrefab;
+    public GameObject bluePlayerPrefab;
     public GameObject pauseCanvas;
     public bool paused = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0, 5, 0), Quaternion.identity);
+        //set paused state
         SetPaused();
+        //allocate a team now?
+        int numBlue = NumInTeam(1);
+        int numRed = NumInTeam(2);
+        if (numBlue <= numRed)
+        {
+            Debug.Log("Allocated to blue Team");
+            PhotonTeamExtensions.JoinTeam(PhotonNetwork.LocalPlayer, "Blue");
+            //blue team prefab
+            PhotonNetwork.Instantiate(bluePlayerPrefab.name, new Vector3(0, 5, 0), Quaternion.identity);
+        }
+        else
+        {
+            Debug.Log("Allocated to red Team");
+            PhotonTeamExtensions.JoinTeam(PhotonNetwork.LocalPlayer, "Red");
+            //red team prefab
+            PhotonNetwork.Instantiate(redPlayerPrefab.name, new Vector3(0, 5, 0), Quaternion.identity);
+        }
     }
+
+    int NumInTeam(int teamIndex)
+    {
+        if (PhotonTeamsManager.Instance.TryGetTeamMembers((byte)teamIndex, out Player[] members))
+        {
+            return members.Length;
+        }
+        return 0;
+    }
+
 
     public void Quit()
     {
