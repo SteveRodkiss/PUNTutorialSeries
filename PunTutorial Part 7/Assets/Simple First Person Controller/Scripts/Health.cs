@@ -9,6 +9,10 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable
     Renderer[] visuals;
     public int health = 100;
 
+    //get the team for the respwning
+    int team = 0; 
+
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         //sync health
@@ -33,9 +37,11 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable
         SetRenderers(false);
         health = 100;
         GetComponent<CharacterController>().enabled = false;
-        transform.position = new Vector3(0, 10, 0);
-        yield return new WaitForSeconds(1);
+        Transform spawn = SpawnManager.instance.GetTeamSpawn(team);
+        transform.position = spawn.position;
+        transform.rotation = spawn.rotation;
         GetComponent<CharacterController>().enabled = true;
+        yield return new WaitForSeconds(1);        
         SetRenderers(true);
     }
 
@@ -52,6 +58,8 @@ public class Health : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
     {
         visuals = GetComponentsInChildren<Renderer>();
+        //get the team at the start
+        team = (int)PhotonNetwork.LocalPlayer.CustomProperties["Team"];
     }
 
     // Update is called once per frame
