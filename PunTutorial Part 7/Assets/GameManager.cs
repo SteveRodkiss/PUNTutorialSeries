@@ -61,5 +61,24 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     //reload the level when anyone leaves or joins?- That is done in the demo but is it needed?
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        ReloadLevel();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        ReloadLevel();
+    }
+
+    public void ReloadLevel()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("Reloading Level");
+            PhotonNetwork.LoadLevel(1);
+        }
+    }
+
 
 }
