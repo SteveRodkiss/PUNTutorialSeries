@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 using Photon.Pun.UtilityScripts;
@@ -17,34 +18,17 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         //set paused state
         SetPaused();
-        //allocate a team now?
-        int numBlue = NumInTeam(1);
-        int numRed = NumInTeam(2);
-        if (numBlue <= numRed)
+
+        //check that we dont have a local instance before we instantiate the prefab
+        if (NetworkPlayerManager.localPlayerInstance == null)
         {
-            Debug.Log("Allocated to blue Team");
-            PhotonTeamExtensions.JoinTeam(PhotonNetwork.LocalPlayer, "Blue");
-            //blue team prefab
-            PhotonNetwork.Instantiate(bluePlayerPrefab.name, new Vector3(0, 5, 0), Quaternion.identity);
-        }
-        else
-        {
-            Debug.Log("Allocated to red Team");
-            PhotonTeamExtensions.JoinTeam(PhotonNetwork.LocalPlayer, "Red");
-            //red team prefab
-            PhotonNetwork.Instantiate(redPlayerPrefab.name, new Vector3(0, 5, 0), Quaternion.identity);
+            //instantiate the correct player based on the team
+            int team = (int)PhotonNetwork.LocalPlayer.CustomProperties["Team"];
+            Debug.Log($"Team number {team} is being instantiated");
+            //instantiate the blue player if team is 0 and red if it is not
+            PhotonNetwork.Instantiate(team == 0 ? bluePlayerPrefab.name : redPlayerPrefab.name, new Vector3(0, 5, 0), Quaternion.identity);
         }
     }
-
-    int NumInTeam(int teamIndex)
-    {
-        if (PhotonTeamsManager.Instance.TryGetTeamMembers((byte)teamIndex, out Player[] members))
-        {
-            return members.Length;
-        }
-        return 0;
-    }
-
 
     public void Quit()
     {
@@ -53,7 +37,7 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        PhotonNetwork.LoadLevel(0);
+        SceneManager.LoadScene(0);
     }
 
     // Update is called once per frame
@@ -75,5 +59,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         //set the cursoro visible
         Cursor.visible = paused;
     }
+
+    //reload the level when anyone leaves or joins?- That is done in the demo but is it needed?
 
 }

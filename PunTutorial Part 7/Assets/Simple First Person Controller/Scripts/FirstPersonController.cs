@@ -44,14 +44,6 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
             GetComponentInChildren<Camera>().enabled = false;
             GetComponentInChildren<AudioListener>().enabled = false;
         }
-        else
-        {
-            if (PhotonTeamsManager.Instance.TryGetTeamMembers(1, out Player[] blueTeam) && PhotonTeamsManager.Instance.TryGetTeamMembers(2, out Player[] redTeam))
-            {
-                //we have redteam and blue team
-                PhotonTeamExtensions.JoinTeam(PhotonNetwork.LocalPlayer, (blueTeam.Length < redTeam.Length) ? (byte)1 : (byte)2);
-            }
-        }
     }
 
     // Update is called once per frame
@@ -82,6 +74,11 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
 
     void Move()
     {
+        //needed this co a warning came up when people tried to move while their character controller was inactive
+        if (cc.enabled == false)
+        {
+            return;
+        }
         //update speed based onn the input
         Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         input = Vector3.ClampMagnitude(input, 1f);

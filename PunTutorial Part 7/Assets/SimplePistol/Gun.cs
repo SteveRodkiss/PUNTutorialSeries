@@ -8,11 +8,8 @@ public class Gun : MonoBehaviourPunCallbacks
     public Transform gunTransform;
     public ParticleSystem ps;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //layermask used for teams to make sure we ignore our own team- set in the inspector for each team player
+    public LayerMask ignoreLayerMask;
 
     // Update is called once per frame
     void Update()
@@ -34,7 +31,8 @@ public class Gun : MonoBehaviourPunCallbacks
         //shoot
         ps.Play();
         Ray ray = new Ray(gunTransform.position, gunTransform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        //cast the reay- ignoreing the layers in the layer mask
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, ~ignoreLayerMask))
         {
             //we hit something
             Debug.Log($"Raycast hit {hit.collider.name}");

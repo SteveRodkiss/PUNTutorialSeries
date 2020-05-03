@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2699541614218734238}
   - component: {fileID: 2699541614218734235}
   - component: {fileID: 2699541614218734236}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 2699541614725998675}
   - component: {fileID: 2699541614725998676}
   - component: {fileID: 2699541614725998677}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -175,11 +175,12 @@ GameObject:
   - component: {fileID: 2699541615817244656}
   - component: {fileID: 2699541615817244670}
   - component: {fileID: 97657100516892860}
+  - component: {fileID: 5913277524200705400}
   - component: {fileID: 1082850172879714301}
   - component: {fileID: 1295374158335319420}
   - component: {fileID: 8157521833490898238}
-  m_Layer: 0
-  m_Name: Player
+  m_Layer: 9
+  m_Name: RedPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -252,6 +253,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+--- !u!114 &5913277524200705400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2699541615817244657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f72faceda210d541aebb8bab658ee10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1082850172879714301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,6 +318,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunTransform: {fileID: 292710042167484918}
   ps: {fileID: 7671776343637796142}
+  ignoreLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &3136625245200168079
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +333,7 @@ GameObject:
   - component: {fileID: 8763778867933935618}
   - component: {fileID: 7324518848491606944}
   - component: {fileID: 8246762925149782923}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,6 +421,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2699541614725998675}
     m_Modifications:
+    - target: {fileID: 2400278038307622414, guid: fe2550c781bb30d4ba8453be5c3993aa,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5708301408293145296, guid: fe2550c781bb30d4ba8453be5c3993aa,
         type: 3}
       propertyPath: m_Name
@@ -416,6 +437,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000,
         type: 0}
+    - target: {fileID: 5708301408293145296, guid: fe2550c781bb30d4ba8453be5c3993aa,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5708301408293145297, guid: fe2550c781bb30d4ba8453be5c3993aa,
         type: 3}
       propertyPath: m_LocalPosition.x

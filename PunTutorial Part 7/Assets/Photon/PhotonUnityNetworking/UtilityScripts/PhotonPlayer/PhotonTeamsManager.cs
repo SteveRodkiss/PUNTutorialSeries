@@ -97,6 +97,7 @@ namespace Photon.Pun.UtilityScripts
             if (instance == null || ReferenceEquals(this, instance))
             {
                 instance = this;
+                DontDestroyOnLoad(this);
             }
             else
             {
