@@ -18,6 +18,4 @@ public class NetworkPlayerManager : MonoBehaviourPunCallbacks
         //now dont destroy!!
         DontDestroyOnLoad(gameObject);
     }
-
-
 }
