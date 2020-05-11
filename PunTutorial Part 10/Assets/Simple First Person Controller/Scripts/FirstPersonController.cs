@@ -36,6 +36,9 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
     //the charachtercompononet for moving us
     CharacterController cc;
 
+    public Animator animator;
+
+
     private void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -82,6 +85,14 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
         //update speed based onn the input
         Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         input = Vector3.ClampMagnitude(input, 1f);
+        if (input.magnitude>0.01f)
+        {
+            animator.SetBool("Moving", true);
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
+        }
         //transofrm it based off the player transform and scale it by movement speed
         Vector3 move = transform.TransformVector(input) * movementSpeed;
         //is it on the ground
@@ -91,6 +102,7 @@ public class FirstPersonController : MonoBehaviourPunCallbacks, IPunObservable
             //check for jump here
             if (Input.GetButtonDown("Jump"))
             {
+                animator.SetTrigger("Jump");
                 yVelocity = jumpSpeed;
             }
         }

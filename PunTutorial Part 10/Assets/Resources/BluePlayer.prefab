@@ -375,6 +375,7 @@ MonoBehaviour:
   maxPitch: 40
   minPitch: -40
   mouseSensitivity: 2
+  animator: {fileID: 3882262437177657559}
 --- !u!114 &97657100516892860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,9 +419,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   ObservedComponents:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1295374158335319420}
+  - {fileID: 2699541615817244670}
+  - {fileID: 97657100516892860}
+  - {fileID: 4705933992639548837}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -466,7 +468,7 @@ Animator:
   m_GameObject: {fileID: 2699541615817244657}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5285af5ccfc47454f8df4c0566c0f1dd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -489,8 +491,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: Moving
+  - Type: 9
+    SynchronizeType: 2
+    Name: Jump
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
 --- !u!1 &2760272921510599048
 GameObject:
   m_ObjectHideFlags: 0
